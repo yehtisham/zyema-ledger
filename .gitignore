@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/
+
+# Local DB only (Railway uses PostgreSQL)
+data/ledger.db
+
+# Sensitive / large raw files
+real_ledger/
+*.xlsm
+
+# OS
+.DS_Store
