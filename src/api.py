@@ -45,7 +45,7 @@ from chart_of_accounts import ACCOUNTS
 
 # ── Paths ─────────────────────────────────────────────────────────────
 BASE         = os.path.dirname(os.path.dirname(__file__))
-XLSM_PATH    = os.path.expanduser("~/Desktop/Zyema_Ledger.xlsm")
+XLSM_PATH    = os.path.join(BASE, "data", "Zyema_Ledger.xlsm")
 MODEL_PATH   = os.path.join(BASE, "models", "category_suggester.joblib")
 FORECAST_CSV = os.path.join(BASE, "data", "forecast.csv")
 FULL_CSV     = os.path.join(BASE, "data", "full_cashbook.csv")

@@ -17,7 +17,6 @@ data/ledger.db
 
 # Sensitive / large raw files
 real_ledger/
-*.xlsm
 
 # OS
 .DS_Store
