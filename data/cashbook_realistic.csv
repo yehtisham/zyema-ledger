@@ -4999,3 +4999,51 @@ date,description,counterparty,debit,credit,balance,account,category
 2024-12-31,Water bill,Regular Client,6283,0,-14880525,Bank,Utilities
 2024-12-31,bought steel drums htg petro,Pakfistan Drums Co,318778,0,-18822746,Bank,Purchases - Steel Drums
 2024-12-31,IBC tanks dispatched,Regular Client,0,734819,-21613525,Cash,Sales - IBC Tanks
+2024-01-05,Monthly salary payment to factory workers,Staff Payroll,65000,0,0,Bank,Labour & Wages
+2024-01-20,Daily labour charges for drum loading,Casual Labour,28000,0,0,Cash,Labour & Wages
+2024-02-01,Worker wages for January,Staff Payroll,72000,0,0,Bank,Labour & Wages
+2024-02-15,Overtime wages paid to production staff,Factory Workers,34000,0,0,Cash,Labour & Wages
+2024-03-01,Monthly salary disbursement,Staff Payroll,68000,0,0,Bank,Labour & Wages
+2024-03-18,Daily wage workers for warehouse shifting,Casual Labour,25000,0,0,Cash,Labour & Wages
+2024-04-01,Worker pay for March production,Factory Workers,79000,0,0,Bank,Labour & Wages
+2024-04-22,Labour charges for drum unloading,Daily Labour,31000,0,0,Cash,Labour & Wages
+2024-01-01,Office rent for January,Al-Kareem Properties,85000,0,0,Bank,Rent
+2024-02-01,Warehouse rent February,City Storage Solutions,110000,0,0,Bank,Rent
+2024-03-01,Monthly office and storage rent,Al-Kareem Properties,85000,0,0,Bank,Rent
+2024-04-01,Warehouse rent April,City Storage Solutions,110000,0,0,Bank,Rent
+2024-05-01,Storage facility rent May,Metro Warehousing,95000,0,0,Bank,Rent
+2024-06-01,Office premises rent June,Al-Kareem Properties,85000,0,0,Bank,Rent
+2024-07-01,Warehouse and yard rent July,City Storage Solutions,115000,0,0,Bank,Rent
+2024-08-01,Monthly warehouse rent,Metro Warehousing,95000,0,0,Bank,Rent
+2024-01-07,Electricity bill payment,LESCO,8500,0,0,Bank,Utilities
+2024-02-07,Monthly electricity charges,LESCO,9200,0,0,Bank,Utilities
+2024-03-06,Gas bill for factory,SNGPL,4500,0,0,Bank,Utilities
+2024-04-08,Electricity bill April,LESCO,7800,0,0,Bank,Utilities
+2024-05-09,Internet and telephone charges,PTCL,3200,0,0,Bank,Utilities
+2024-06-07,Electricity charges June,LESCO,11000,0,0,Bank,Utilities
+2024-07-08,Water charges and sewerage,WASA,3800,0,0,Bank,Utilities
+2024-08-07,Monthly electricity bill,LESCO,13500,0,0,Bank,Utilities
+2024-01-15,Bank service charges,HBL,1200,0,0,Bank,Bank Charges
+2024-02-12,Transaction fee on RTGS transfer,HBL,800,0,0,Bank,Bank Charges
+2024-03-14,Monthly bank commission,MCB Bank,1500,0,0,Bank,Bank Charges
+2024-04-10,Bank processing fee,HBL,950,0,0,Bank,Bank Charges
+2024-05-13,Service charges on account,MCB Bank,1200,0,0,Bank,Bank Charges
+2024-06-11,Bank transaction charges,HBL,750,0,0,Bank,Bank Charges
+2024-07-15,Cheque book and banking fees,MCB Bank,500,0,0,Bank,Bank Charges
+2024-08-14,Bank commission on transfers,HBL,2200,0,0,Bank,Bank Charges
+2024-01-10,Drum cleaning and washing charges,Al-Hassan Cleaners,18000,0,0,Cash,Refurbishing Costs
+2024-02-08,Steel drum repair and welding,Karachi Metal Works,35000,0,0,Cash,Refurbishing Costs
+2024-03-12,Drum refurbishment batch charges,Al-Hassan Cleaners,22000,0,0,Cash,Refurbishing Costs
+2024-04-15,Drum painting and surface treatment,City Painters,28000,0,0,Cash,Refurbishing Costs
+2024-05-10,Reconditioning cost for IBC tanks,Metal Reconditioners,39000,0,0,Cash,Refurbishing Costs
+2024-06-14,Drum cleaning chemicals and labour,Al-Hassan Cleaners,15000,0,0,Cash,Refurbishing Costs
+2024-07-09,Barrel repair and pressure testing,Karachi Metal Works,32000,0,0,Cash,Refurbishing Costs
+2024-08-11,Drum refurbishment and quality check,Metal Reconditioners,24000,0,0,Cash,Refurbishing Costs
+2024-01-25,Miscellaneous office expenses,General,3500,0,0,Cash,Miscellaneous
+2024-02-20,Sundry expenses for factory,General,5200,0,0,Cash,Miscellaneous
+2024-03-22,General maintenance charges,General,7800,0,0,Cash,Miscellaneous
+2024-04-18,Miscellaneous business expenses,General,2500,0,0,Cash,Miscellaneous
+2024-05-25,Sundry expenses miscellaneous,General,4100,0,0,Cash,Miscellaneous
+2024-06-21,General expense for operations,General,6500,0,0,Cash,Miscellaneous
+2024-07-23,Miscellaneous charges sundry,General,1800,0,0,Cash,Miscellaneous
+2024-08-20,Petty cash and sundry expenses,General,9500,0,0,Cash,Miscellaneous
