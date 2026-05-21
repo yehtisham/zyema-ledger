@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ledgersmart-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m src.migrate && uvicorn src.api:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ledgersmart-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+databases:
+  - name: ledgersmart-db
+    plan: free
