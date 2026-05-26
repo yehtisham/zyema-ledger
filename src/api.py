@@ -41,7 +41,7 @@ from models import Transaction
 from financial_statements import FinancialStatements
 from forecasting import generate_forecast
 from ingest_xlsm import ingest
-from chart_of_accounts import ACCOUNTS
+from chart_of_accounts import ACCOUNTS, get_account_type
 
 # ── Paths ─────────────────────────────────────────────────────────────
 BASE         = os.path.dirname(os.path.dirname(__file__))
@@ -75,9 +75,10 @@ def _db_to_df(db: Session) -> pd.DataFrame:
         raise HTTPException(status_code=503, detail="No transactions in database. POST /ingest-xlsm first.")
     data = [t.to_dict() for t in rows]
     df = pd.DataFrame(data)
-    df["date"]   = pd.to_datetime(df["date"])
-    df["debit"]  = df["debit"].astype(float)
-    df["credit"] = df["credit"].astype(float)
+    df["date"]         = pd.to_datetime(df["date"])
+    df["debit"]        = df["debit"].astype(float)
+    df["credit"]       = df["credit"].astype(float)
+    df["account_type"] = df["category"].apply(lambda c: get_account_type(c) if c else "Unknown")
     return df
 
 def _load_model():
