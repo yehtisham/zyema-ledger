@@ -170,31 +170,31 @@ class FinancialStatements:
         total_equity = capital_in - drawings_out + net_profit
 
         # ── Balance check ─────────────────────────────────────────────
-        difference = round(total_assets - (total_liabilities + total_equity), 2)
+        difference = float(round(total_assets - (total_liabilities + total_equity), 2))
 
         return {
             "as_of": str(as_of_date) if as_of_date else "Present",
             "assets": {
-                "cash_and_bank":        round(cash_balance, 2),
+                "cash_and_bank":        float(round(cash_balance, 2)),
                 "inventory":            {
-                    "breakdown": {k: round(v, 2) for k, v in inventory_breakdown.items()},
-                    "total":     round(total_inventory, 2),
+                    "breakdown": {k: float(round(v, 2)) for k, v in inventory_breakdown.items()},
+                    "total":     float(round(total_inventory, 2)),
                 },
-                "accounts_receivable":  round(accounts_receivable, 2),
-                "total":                round(total_assets, 2),
+                "accounts_receivable":  float(round(accounts_receivable, 2)),
+                "total":                float(round(total_assets, 2)),
             },
             "liabilities": {
-                "accounts_payable": round(accounts_payable, 2),
-                "total":            round(total_liabilities, 2),
+                "accounts_payable": float(round(accounts_payable, 2)),
+                "total":            float(round(total_liabilities, 2)),
             },
             "equity": {
-                "owner_capital":  round(capital_in, 2),
-                "owner_drawings": round(drawings_out, 2),
-                "net_profit":     round(net_profit, 2),
-                "total":          round(total_equity, 2),
+                "owner_capital":  float(round(capital_in, 2)),
+                "owner_drawings": float(round(drawings_out, 2)),
+                "net_profit":     float(round(net_profit, 2)),
+                "total":          float(round(total_equity, 2)),
             },
-            "balanced":    abs(difference) < 1.0,
-            "difference":  difference,
+            "balanced":   bool(abs(difference) < 1.0),
+            "difference": difference,
         }
 
     # ═════════════════════════════════════════════════════════════════
