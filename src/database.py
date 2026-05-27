@@ -21,7 +21,7 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 # Override with DATABASE_URL env var for production PostgreSQL.
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "sqlite:///data/ledger.db"
+    "sqlite:////data/ledger.db"
 )
 
 # SQLite needs check_same_thread=False for FastAPI's multi-threaded env

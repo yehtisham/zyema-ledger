@@ -22,6 +22,9 @@ from models import Transaction
 BASE = os.path.dirname(os.path.dirname(__file__))
 FULL_CSV = os.path.join(BASE, "data", "full_cashbook.csv")
 
+# Ensure /data directory exists (required for Render persistent disk)
+os.makedirs("/data", exist_ok=True)
+
 
 def migrate():
     # ── 1. Create tables if they don't exist ─────────────────────────
