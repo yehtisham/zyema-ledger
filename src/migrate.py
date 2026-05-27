@@ -31,7 +31,16 @@ def migrate():
     Base.metadata.create_all(bind=engine)
     print("Tables created (or already exist)")
 
-    # ── 2. Load CSV ───────────────────────────────────────────────────
+    # ── 2. Check existing row count ───────────────────────────────────
+    with engine.connect() as conn:
+        existing = conn.execute(text("SELECT COUNT(*) FROM transactions")).scalar()
+
+    if existing > 0:
+        print(f"Database already has {existing} rows — skipping ingest.")
+        return
+
+    # ── 3. Load CSV (only runs when table is empty) ───────────────────
+    print("Empty database — running full ingest from CSV…")
     df = pd.read_csv(FULL_CSV)
     df["date"]        = pd.to_datetime(df["date"]).dt.date
     df["description"] = df["description"].fillna("")
@@ -47,10 +56,7 @@ def migrate():
             lambda x: "htg_petro" if str(x).strip() == "HTG Petro" else "xlsm"
         )
 
-    # ── 3. Clear existing rows and reload ────────────────────────────
-    with engine.begin() as conn:
-        conn.execute(text("DELETE FROM transactions"))
-
+    # ── 4. Insert rows ────────────────────────────────────────────────
     rows = [
         Transaction(
             date=        row["date"],
@@ -73,7 +79,7 @@ def migrate():
 
     print(f"Migrated {len(rows)} transactions")
 
-    # ── 4. Verify ─────────────────────────────────────────────────────
+    # ── 5. Verify ─────────────────────────────────────────────────────
     with engine.connect() as conn:
         count = conn.execute(text("SELECT COUNT(*) FROM transactions")).scalar()
         earliest = conn.execute(text("SELECT MIN(date) FROM transactions")).scalar()
