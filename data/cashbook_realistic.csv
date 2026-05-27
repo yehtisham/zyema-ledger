@@ -5010,3 +5010,63 @@ date,description,counterparty,debit,credit,balance,account,category
 2024-08-17,labour payment,Workers,40500,0,0,Cash,Labour & Wages
 2024-04-03,salary paid to staff,Workers,38200,0,0,Cash,Labour & Wages
 2024-10-08,wages to workers,Workers,15700,0,0,Cash,Labour & Wages
+2024-07-13,Steel drum purchase,Steel Supplier,1766000,0,0,Bank,Purchases - Steel Drums
+2024-04-05,Purchase Steel Drums,Drum Vendor,2407000,0,0,Bank,Purchases - Steel Drums
+2024-09-22,Purchase Steel Drums,Pak Steel,1637000,0,0,Bank,Purchases - Steel Drums
+2024-07-24,Steel drum purchase,Drum Vendor,2428000,0,0,Bank,Purchases - Steel Drums
+2024-11-07,Bought steel drums from vendor,Pak Steel,1551000,0,0,Bank,Purchases - Steel Drums
+2024-10-11,Purchase Steel Drums,HTG Petro,2767000,0,0,Bank,Purchases - Steel Drums
+2024-06-13,Purchased steel drums from supplier,Drum Vendor,832000,0,0,Bank,Purchases - Steel Drums
+2024-07-07,Steel drums procurement,HTG Petro,2738000,0,0,Bank,Purchases - Steel Drums
+2024-09-07,Bought steel drums bulk order,HTG Petro,2300000,0,0,Bank,Purchases - Steel Drums
+2024-03-07,Bought steel drums from vendor,Pak Steel,1545000,0,0,Bank,Purchases - Steel Drums
+2024-09-22,Bought steel drums from vendor,HTG Petro,1261000,0,0,Bank,Purchases - Steel Drums
+2024-01-06,Bought steel drums bulk order,Pak Steel,1140000,0,0,Bank,Purchases - Steel Drums
+2024-07-21,Purchase Steel Drums,Steel Supplier,2099000,0,0,Bank,Purchases - Steel Drums
+2024-10-01,Purchase of steel drums from HTG,Drum Vendor,1370000,0,0,Bank,Purchases - Steel Drums
+2024-09-13,Steel drum purchase,HTG Petro,1687000,0,0,Bank,Purchases - Steel Drums
+2024-08-09,Purchase of steel drums from HTG,Steel Supplier,2284000,0,0,Bank,Purchases - Steel Drums
+2024-12-16,Purchased steel drums from supplier,Steel Supplier,1431000,0,0,Bank,Purchases - Steel Drums
+2024-10-14,Purchase Steel Drums,HTG Petro,1298000,0,0,Bank,Purchases - Steel Drums
+2024-03-10,Bought steel drums from vendor,Steel Supplier,2519000,0,0,Bank,Purchases - Steel Drums
+2024-03-07,Steel drums procurement,Pak Steel,1781000,0,0,Bank,Purchases - Steel Drums
+2024-05-04,Steel drums procurement,Steel Supplier,1104000,0,0,Bank,Purchases - Steel Drums
+2024-09-10,Purchased steel drums from supplier,HTG Petro,2215000,0,0,Bank,Purchases - Steel Drums
+2024-04-13,Purchase of steel drums from HTG,Drum Vendor,2475000,0,0,Bank,Purchases - Steel Drums
+2024-07-14,Steel drums procurement,HTG Petro,1560000,0,0,Bank,Purchases - Steel Drums
+2024-01-12,Purchase of steel drums from HTG,Pak Steel,1766000,0,0,Bank,Purchases - Steel Drums
+2024-05-28,Steel drum purchase,Drum Vendor,1244000,0,0,Bank,Purchases - Steel Drums
+2024-12-24,Steel drums procurement,Steel Supplier,1847000,0,0,Bank,Purchases - Steel Drums
+2024-07-10,Bought steel drums bulk order,HTG Petro,2636000,0,0,Bank,Purchases - Steel Drums
+2024-07-09,Purchase Steel Drums,Drum Vendor,2145000,0,0,Bank,Purchases - Steel Drums
+2024-08-18,Bought steel drums from vendor,Drum Vendor,2607000,0,0,Bank,Purchases - Steel Drums
+2024-05-14,Bought IBC tanks,IBC Vendor,2389000,0,0,Bank,Purchases - IBC Tanks
+2024-11-22,Bought IBC tanks from supplier,HTG Petro,2393000,0,0,Bank,Purchases - IBC Tanks
+2024-06-07,Purchase of IBC tanks bulk,HTG Petro,2290000,0,0,Bank,Purchases - IBC Tanks
+2024-12-10,IBC tank purchase,Rawalpindi Metals,1520000,0,0,Bank,Purchases - IBC Tanks
+2024-11-09,Purchased IBC small tanks bulk,Rawalpindi Metals,1770000,0,0,Bank,Purchases - IBC Tanks
+2024-07-28,Purchase of IBC tanks bulk,Rawalpindi Metals,2477000,0,0,Bank,Purchases - IBC Tanks
+2024-01-04,IBC tank purchase,HTG Petro,2990000,0,0,Bank,Purchases - IBC Tanks
+2024-05-22,Bought IBC tanks,Rawalpindi Metals,2663000,0,0,Bank,Purchases - IBC Tanks
+2024-04-09,Purchased IBC small tanks bulk,IBC Vendor,2006000,0,0,Bank,Purchases - IBC Tanks
+2024-04-24,Purchase IBC's Small Tanks,HTG Petro,2090000,0,0,Bank,Purchases - IBC Tanks
+2024-02-19,Purchase IBC's Small Tanks,HTG Petro,2548000,0,0,Bank,Purchases - IBC Tanks
+2024-05-12,IBC tanks procurement,HTG Petro,1220000,0,0,Bank,Purchases - IBC Tanks
+2024-07-13,Bought IBC tanks,IBC Vendor,2733000,0,0,Bank,Purchases - IBC Tanks
+2024-06-05,Bought IBC tanks,IBC Vendor,2432000,0,0,Bank,Purchases - IBC Tanks
+2024-07-18,Bought IBC tanks,IBC Vendor,1849000,0,0,Bank,Purchases - IBC Tanks
+2024-04-09,Bought IBC tanks from supplier,Rawalpindi Metals,2405000,0,0,Bank,Purchases - IBC Tanks
+2024-03-27,Bought IBC tanks from supplier,Rawalpindi Metals,2798000,0,0,Bank,Purchases - IBC Tanks
+2024-11-06,Purchased IBC tanks from vendor,Rawalpindi Metals,1805000,0,0,Bank,Purchases - IBC Tanks
+2024-08-17,Purchase IBC's Small Tanks,HTG Petro,2183000,0,0,Bank,Purchases - IBC Tanks
+2024-08-03,Purchase of IBC tanks bulk,Rawalpindi Metals,817000,0,0,Bank,Purchases - IBC Tanks
+2024-10-22,IBC tanks procurement,Rawalpindi Metals,850000,0,0,Bank,Purchases - IBC Tanks
+2024-10-11,Purchased IBC small tanks bulk,IBC Vendor,1496000,0,0,Bank,Purchases - IBC Tanks
+2024-03-19,Purchase IBC's Small Tanks,IBC Vendor,952000,0,0,Bank,Purchases - IBC Tanks
+2024-01-11,IBC tank purchase,Rawalpindi Metals,2025000,0,0,Bank,Purchases - IBC Tanks
+2024-03-27,Bought IBC tanks from supplier,HTG Petro,2552000,0,0,Bank,Purchases - IBC Tanks
+2024-04-26,IBC tank purchase,HTG Petro,2833000,0,0,Bank,Purchases - IBC Tanks
+2024-03-09,IBC tanks procurement,Rawalpindi Metals,2332000,0,0,Bank,Purchases - IBC Tanks
+2024-02-18,IBC tank purchase,Rawalpindi Metals,1528000,0,0,Bank,Purchases - IBC Tanks
+2024-12-12,Purchased IBC tanks from vendor,Rawalpindi Metals,1276000,0,0,Bank,Purchases - IBC Tanks
+2024-12-05,Bought IBC tanks,HTG Petro,1163000,0,0,Bank,Purchases - IBC Tanks
