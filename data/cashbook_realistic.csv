@@ -4960,3 +4960,53 @@ date,description,counterparty,debit,credit,balance,account,category
 2024-05-07,customer paid outstanding balance,Pak Chemical,353700,0,0,Bank,Customer Payment Received
 2024-01-24,payment received against outstanding,Usman Traders,80000,0,0,Bank,Customer Payment Received
 2024-10-16,received payment against dues,Ahmed Traders,497100,0,0,Bank,Customer Payment Received
+2024-11-04,wages to workers,Daily Workers,44000,0,0,Cash,Labour & Wages
+2024-04-08,paid daily wages,Daily Workers,21400,0,0,Cash,Labour & Wages
+2024-11-24,yard labour charges,Factory Workers,19400,0,0,Cash,Labour & Wages
+2024-10-14,wages paid to workers,Workers,20300,0,0,Cash,Labour & Wages
+2024-04-08,loading labour charges,Factory Workers,11500,0,0,Cash,Labour & Wages
+2024-09-07,warehouse worker wages,Daily Workers,79400,0,0,Cash,Labour & Wages
+2024-07-08,labour payment,Factory Workers,44500,0,0,Cash,Labour & Wages
+2024-01-25,overtime wages,Staff,63400,0,0,Cash,Labour & Wages
+2024-06-09,paid daily wages,Staff,52100,0,0,Cash,Labour & Wages
+2024-02-03,salary payment to workers,Workers,55100,0,0,Cash,Labour & Wages
+2024-06-20,monthly salary payment,Workers,68200,0,0,Cash,Labour & Wages
+2024-09-04,production staff wages,Labour,18300,0,0,Cash,Labour & Wages
+2024-09-10,overtime payment to workers,Daily Workers,55400,0,0,Cash,Labour & Wages
+2024-10-07,warehouse worker wages,Workers,14000,0,0,Cash,Labour & Wages
+2024-11-08,casual labour payment,Hashim,18500,0,0,Cash,Labour & Wages
+2024-04-28,daily wages to factory workers,Labour,44400,0,0,Cash,Labour & Wages
+2024-08-21,overtime payment to workers,Hashim,29300,0,0,Cash,Labour & Wages
+2024-06-12,wages to staff,Daily Workers,43000,0,0,Cash,Labour & Wages
+2024-12-22,paid worker wages,Workers,30400,0,0,Cash,Labour & Wages
+2024-09-24,wages paid to staff,Staff,68600,0,0,Cash,Labour & Wages
+2024-07-09,production staff wages,Daily Workers,36800,0,0,Cash,Labour & Wages
+2024-11-11,overtime payment to workers,Workers,38000,0,0,Cash,Labour & Wages
+2024-01-26,salary paid to staff,Labour,43100,0,0,Cash,Labour & Wages
+2024-02-07,production staff wages,Factory Workers,49200,0,0,Cash,Labour & Wages
+2024-04-21,paid labour charges,Labour,68100,0,0,Cash,Labour & Wages
+2024-03-09,paid daily wages,Staff,78600,0,0,Cash,Labour & Wages
+2024-05-24,worker wages,Labour,60400,0,0,Cash,Labour & Wages
+2024-06-08,paid daily wages,Factory Workers,72700,0,0,Cash,Labour & Wages
+2024-02-25,wages paid to workers,Workers,28000,0,0,Cash,Labour & Wages
+2024-11-06,overtime wages,Daily Workers,63300,0,0,Cash,Labour & Wages
+2024-10-03,salary payment to workers,Labour,69300,0,0,Cash,Labour & Wages
+2024-09-09,unloading labour charges,Workers,23000,0,0,Cash,Labour & Wages
+2024-11-18,casual labour payment,Hashim,52600,0,0,Cash,Labour & Wages
+2024-02-10,labour charges,Staff,67500,0,0,Cash,Labour & Wages
+2024-01-24,yard labour charges,Daily Workers,42500,0,0,Cash,Labour & Wages
+2024-09-25,wages to hashim,Factory Workers,21900,0,0,Cash,Labour & Wages
+2024-11-10,overtime payment to workers,Daily Workers,74500,0,0,Cash,Labour & Wages
+2024-10-07,paid daily wages,Hashim,29200,0,0,Cash,Labour & Wages
+2024-09-25,production staff wages,Factory Workers,8100,0,0,Cash,Labour & Wages
+2024-10-11,paid labour charges,Workers,22700,0,0,Cash,Labour & Wages
+2024-06-27,overtime wages,Hashim,39400,0,0,Cash,Labour & Wages
+2024-01-08,yard labour charges,Factory Workers,18300,0,0,Cash,Labour & Wages
+2024-02-24,paid labour charges,Workers,77800,0,0,Cash,Labour & Wages
+2024-03-05,factory worker wages,Labour,29600,0,0,Cash,Labour & Wages
+2024-05-17,wages for yard work,Factory Workers,63500,0,0,Cash,Labour & Wages
+2024-04-18,casual labour payment,Daily Workers,34400,0,0,Cash,Labour & Wages
+2024-12-10,salary payment to workers,Daily Workers,56900,0,0,Cash,Labour & Wages
+2024-08-17,labour payment,Workers,40500,0,0,Cash,Labour & Wages
+2024-04-03,salary paid to staff,Workers,38200,0,0,Cash,Labour & Wages
+2024-10-08,wages to workers,Workers,15700,0,0,Cash,Labour & Wages
