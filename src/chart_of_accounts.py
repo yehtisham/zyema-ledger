@@ -59,6 +59,8 @@ ACCOUNTS: dict[str, dict] = {
     # ── Pass-through (not on P&L or Balance Sheet) ────────────────────
     "Accounts Payable Payment":   {"code": "9001", "type": "Payable",   "normal": "credit"},
     "Goods Return":               {"code": "9002", "type": "Contra",    "normal": "debit"},
+    "Customer Payment Received":  {"code": "9003", "type": "Asset",     "normal": "debit"},
+    "Labour & Wages":             {"code": "6007", "type": "Expense",   "normal": "debit"},
 }
 
 # ── Lookup helpers ────────────────────────────────────────────────────
