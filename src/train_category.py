@@ -28,15 +28,15 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 
-MIN_REAL_SAMPLES = 10   # categories below this get topped up from synthetic
-SYNTHETIC_TOPUP  = 200  # how many synthetic rows to add per sparse category
+MIN_REAL_SAMPLES = 100   # categories below this get topped up from synthetic
+SYNTHETIC_TOPUP  = 80   # how many synthetic rows to add per sparse category
 
 # ── 1. Load real data ─────────────────────────────────────────────────
 real = pd.read_csv("data/full_cashbook.csv")
 real["description"]  = real["description"].fillna("")
 real["counterparty"] = real["counterparty"].fillna("")
 real["text"]         = real["description"] + " " + real["counterparty"]
-real["amount"]       = real["credit"] - real["debit"]
+real["amount"]       = real["credit"] + real["debit"]
 real["source"]       = "real"
 real = real[real["text"].str.strip() != ""]
 real = real[real["category"].notna()]
@@ -46,7 +46,7 @@ synth = pd.read_csv("data/cashbook_realistic.csv")
 synth["description"]  = synth["description"].fillna("")
 synth["counterparty"] = synth["counterparty"].fillna("")
 synth["text"]         = synth["description"] + " " + synth["counterparty"]
-synth["amount"]       = synth["credit"] - synth["debit"]
+synth["amount"]       = synth["credit"] + synth["debit"]
 synth["source"]       = "synthetic"
 synth = synth[synth["text"].str.strip() != ""]
 synth = synth[synth["category"].notna() & (synth["category"] != "Uncategorized")]
