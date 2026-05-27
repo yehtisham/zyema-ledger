@@ -21,6 +21,7 @@ POST /ingest-xlsm             refresh data from Zyema_Ledger.xlsm
 
 import sys
 import os
+from datetime import date as date_type
 sys.path.insert(0, os.path.dirname(__file__))
 
 import warnings
@@ -209,7 +210,7 @@ def add_transaction(txn: NewTransaction, db: Session = Depends(get_db)):
             detail=f"Unknown category '{txn.category}'. See /chart-of-accounts.",
         )
     row = Transaction(
-        date=         txn.date,
+        date=         date_type.fromisoformat(txn.date),
         description=  txn.description,
         counterparty= txn.counterparty,
         account=      txn.account,
