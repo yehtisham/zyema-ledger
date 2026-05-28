@@ -155,7 +155,7 @@ class FinancialStatements:
             accounts_payable = max(0.0, accounts_payable)
         else:
             purchases_total = df[df["account_type"] == "COGS"]["debit"].sum()
-            payments_total  = df[df["category"] == "Accounts Payable Payment"]["credit"].sum()
+            payments_total  = df[df["category"] == "Accounts Payable Payment"]["debit"].sum()
             accounts_payable = max(0.0, purchases_total - payments_total)
 
         total_liabilities = accounts_payable
@@ -204,7 +204,7 @@ class FinancialStatements:
         # Operating
         # Cash from sales = only payments actually received from customers
         cash_from_sales      = df[df["category"] == "Customer Payment Received"]["debit"].sum()
-        cash_paid_suppliers  = df[df["category"] == "Accounts Payable Payment"]["credit"].sum()
+        cash_paid_suppliers  = df[df["category"] == "Accounts Payable Payment"]["debit"].sum()
         cash_paid_expenses   = df[df["account_type"] == "Expense"]["debit"].sum()
         net_operating = cash_from_sales - cash_paid_suppliers - cash_paid_expenses
 
