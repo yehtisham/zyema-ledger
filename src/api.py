@@ -208,6 +208,9 @@ def accounts_receivable(db: Session = Depends(get_db)):
                  .groupby("counterparty")["debit"].sum()
     ar = (sold - received).fillna(sold).reset_index()
     ar.columns = ["customer", "outstanding_pkr"]
+    # Normalize names then merge duplicates that differ only by case/whitespace
+    ar["customer"] = ar["customer"].str.strip().str.title()
+    ar = ar.groupby("customer", as_index=False)["outstanding_pkr"].sum()
     ar = ar[ar["outstanding_pkr"].abs() > 0] \
            .sort_values("outstanding_pkr", ascending=False)
     return {
