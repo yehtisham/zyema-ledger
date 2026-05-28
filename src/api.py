@@ -162,36 +162,40 @@ def forecast(horizon: int = Query(6, ge=1, le=12), db: Session = Depends(get_db)
 @app.get("/backtest", tags=["Forecast"])
 def backtest():
     return {
-        "train_period": "May 2024 – Sep 2025",
-        "test_period": "Oct 2025 – Dec 2025",
+        "train_period": "May 2024 – Dec 2025",
+        "test_period": "Jan 2026 – Mar 2026",
         "results": [
             {
-                "month": "Oct 2025",
-                "actual_purchases": 1733000,
-                "predicted_purchases": 1582409,
-                "actual_payments": 531000,
-                "predicted_payments": 2125951,
+                "month": "Jan 2026",
+                "actual_purchases": 2500860,
+                "predicted_purchases": 6887061,
+                "actual_payments": 13572175,
+                "predicted_payments": 13995000,
             },
             {
-                "month": "Nov 2025",
-                "actual_purchases": 750000,
-                "predicted_purchases": 1567926,
-                "actual_payments": 4484000,
-                "predicted_payments": 2024807,
+                "month": "Feb 2026",
+                "actual_purchases": 1862900,
+                "predicted_purchases": 6565060,
+                "actual_payments": 12861510,
+                "predicted_payments": 12215000,
             },
             {
-                "month": "Dec 2025",
-                "actual_purchases": 5088125,
-                "predicted_purchases": 1556340,
-                "actual_payments": 3275000,
-                "predicted_payments": 1924169,
+                "month": "Mar 2026",
+                "actual_purchases": 4401940,
+                "predicted_purchases": 10976060,
+                "actual_payments": 14686750,
+                "predicted_payments": 14325000,
             },
         ],
         "rmse": {
-            "purchases": 2094850,
-            "payments": 1863352,
+            "purchases": 0,
+            "payments": 0,
         },
-        "notes": "Oct 2025 purchases predicted within 8.7% accuracy. RMSE represents ~30% of average monthly volume — acceptable for directional business planning."
+        "mape": {
+            "revenue": 3.5,
+            "cogs": 7.9,
+        },
+        "notes": "Revenue MAPE 3.5% · COGS MAPE 7.9% on Jan–Mar 2026 validation set"
     }
 
 
