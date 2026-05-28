@@ -237,9 +237,8 @@ def delete_transaction(txn_id: int, db: Session = Depends(get_db)):
 @app.post("/predict-category", tags=["ML"])
 def predict_category(req: PredictRequest):
     model      = _load_model()
-    input_df   = pd.DataFrame([{"text": req.description, "amount": req.amount}])
-    prediction = model.predict(input_df)[0]
-    probs      = model.predict_proba(input_df)[0]
+    prediction = model.predict([req.description])[0]
+    probs      = model.predict_proba([req.description])[0]
     top3 = sorted(zip(model.classes_, probs), key=lambda x: x[1], reverse=True)[:3]
     return {
         "suggested_category": prediction,

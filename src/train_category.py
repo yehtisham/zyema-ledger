@@ -22,8 +22,6 @@ import pandas as pd
 import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
@@ -77,7 +75,7 @@ if topup_cats:
     print(f"\nTopped up from synthetic: {topup_cats}")
 
 # ── 3. Train / test split ─────────────────────────────────────────────
-X = df[["text", "amount"]]
+X = df["text"]
 y = df["category"]
 
 min_class_count = y.value_counts().min()
@@ -89,11 +87,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # ── 4. Pipeline ───────────────────────────────────────────────────────
 pipe = Pipeline([
-    ("prep", ColumnTransformer([
-        ("text", TfidfVectorizer(max_features=3000, ngram_range=(1, 2)), "text"),
-        ("num",  StandardScaler(), ["amount"]),
-    ])),
-    ("clf", LogisticRegression(max_iter=400, C=1.0, class_weight="balanced")),
+    ("tfidf", TfidfVectorizer(max_features=3000, ngram_range=(1, 2))),
+    ("clf",   LogisticRegression(max_iter=1000, C=5, class_weight="balanced")),
 ])
 
 # ── 5. Train ──────────────────────────────────────────────────────────
