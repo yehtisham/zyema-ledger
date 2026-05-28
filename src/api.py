@@ -154,7 +154,6 @@ def cash_flow(
 @app.get("/forecast", tags=["Forecast"])
 def forecast(horizon: int = Query(6, ge=1, le=12), db: Session = Depends(get_db)):
     df = _db_to_df(db)
-    df = df[df["source"] != "manual"]  # Exclude manual transactions for unbiased forecasting
     df.to_csv(FULL_CSV, index=False)
     fc = generate_forecast(data_path=FULL_CSV, horizon=horizon, output_path=FORECAST_CSV)
     return fc.to_dict(orient="records")
