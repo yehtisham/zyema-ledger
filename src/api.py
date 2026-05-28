@@ -240,6 +240,31 @@ def accounts_receivable(db: Session = Depends(get_db)):
     }
 
 
+@app.get("/accounts-payable", tags=["Statements"])
+def accounts_payable(db: Session = Depends(get_db)):
+    df = _db_to_df(db)
+    df["counterparty"] = df["counterparty"].apply(normalize_counterparty)
+
+    purchased = df[df["account_type"] == "COGS"].groupby("counterparty")["debit"].sum()
+
+    ap_rows = df[df["category"] == "Accounts Payable Payment"]
+    ap_paid = (
+        ap_rows.groupby("counterparty")["debit"].sum()
+               .add(ap_rows.groupby("counterparty")["credit"].sum(), fill_value=0)
+    )
+
+    ap = purchased.subtract(ap_paid, fill_value=0).reset_index()
+    ap.columns = ["supplier", "outstanding_pkr"]
+    ap["supplier"] = ap["supplier"].str.strip().str.title()
+    ap = ap.groupby("supplier", as_index=False)["outstanding_pkr"].sum()
+    ap = ap[ap["outstanding_pkr"] > 0].sort_values("outstanding_pkr", ascending=False)
+
+    return {
+        "total_outstanding_pkr": round(float(ap["outstanding_pkr"].sum()), 2),
+        "suppliers": ap.to_dict(orient="records"),
+    }
+
+
 @app.get("/transactions", tags=["Transactions"])
 def get_transactions(
     category:     Optional[str] = Query(None),
