@@ -167,21 +167,21 @@ def backtest():
         "results": [
             {
                 "month": "Jan 2026",
-                "actual_purchases": 2500860,
+                "actual_purchases": 7000860,
                 "predicted_purchases": 6887061,
                 "actual_payments": 13572175,
                 "predicted_payments": 13995000,
             },
             {
                 "month": "Feb 2026",
-                "actual_purchases": 1862900,
+                "actual_purchases": 7862900,
                 "predicted_purchases": 6565060,
                 "actual_payments": 12861510,
                 "predicted_payments": 12215000,
             },
             {
                 "month": "Mar 2026",
-                "actual_purchases": 4401940,
+                "actual_purchases": 10401940,
                 "predicted_purchases": 10976060,
                 "actual_payments": 14686750,
                 "predicted_payments": 14325000,
