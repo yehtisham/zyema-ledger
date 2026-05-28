@@ -24,7 +24,6 @@ Outputs
 
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.holtwinters import Holt, ExponentialSmoothing
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -40,13 +39,29 @@ def load_monthly(path: str = "data/cleaned_cashbook.csv") -> pd.DataFrame:
     Aggregate the cleaned cashbook to monthly totals.
     Returns a DataFrame indexed by month-start date.
     """
+    _EXPENSE_CATS = {
+        'Accounts Payable Payment', 'Goods Return', 'Bank Charges',
+        'Office Supplies', 'Miscellaneous', 'Rent', 'Utilities',
+        'Freight & Conveyance', 'Labour & Wages',
+    }
+
     df = pd.read_csv(path)
     df["date"] = pd.to_datetime(df["date"])
     df["month"] = df["date"].dt.to_period("M").dt.to_timestamp()
 
+    df["is_purchase"] = (
+        df["category"].str.startswith("Purchases", na=False) |
+        (df["category"] == "Refurbishing Costs")
+    )
+    df["is_payment"] = (
+        ~df["category"].isin(_EXPENSE_CATS) & (df["credit"] > 0)
+    )
+
     monthly = (
-        df.groupby("month")
-        .agg(purchases=("debit", "sum"), payments=("credit", "sum"))
+        df.groupby("month").agg(
+            purchases=("debit",  lambda x: x[df.loc[x.index, "is_purchase"]].sum()),
+            payments= ("credit", lambda x: x[df.loc[x.index, "is_payment"]].sum()),
+        )
         .reset_index()
     )
     monthly["net_cash_flow"]  = monthly["payments"] - monthly["purchases"]
@@ -78,45 +93,57 @@ def load_monthly(path: str = "data/cleaned_cashbook.csv") -> pd.DataFrame:
 # ── Forecasting engine ────────────────────────────────────────────────
 
 def _holt_forecast(series: pd.Series, steps: int = 6) -> pd.DataFrame:
-    clean = series.replace(0, np.nan).dropna()
+    from prophet import Prophet
+    import logging
+    logging.getLogger('prophet').setLevel(logging.WARNING)
+    logging.getLogger('cmdstanpy').setLevel(logging.WARNING)
 
-    if len(clean) < 12:
-        # Not enough data — fall back to Holt Linear Trend
-        model  = Holt(clean, damped_trend=True, initialization_method="estimated")
-        fitted = model.fit(optimized=True)
-    else:
-        # Use Holt-Winters with additive seasonality (12-month cycle)
-        try:
-            model  = ExponentialSmoothing(
-                clean,
-                trend="add",
-                seasonal="add",
-                seasonal_periods=12,
-                initialization_method="estimated",
-                damped_trend=True,
-            )
-            fitted = model.fit(optimized=True)
-        except Exception:
-            # Fall back to Holt if seasonal model fails
-            model  = Holt(clean, damped_trend=True, initialization_method="estimated")
-            fitted = model.fit(optimized=True)
+    # Prepare dataframe for Prophet
+    df = pd.DataFrame({
+        'ds': series.index if hasattr(series.index, 'freq') else pd.date_range(start='2024-05-01', periods=len(series), freq='MS'),
+        'y': series.values
+    })
+    df = df[df['y'] > 0]  # Remove zero months for better fitting
 
-    pred   = fitted.forecast(steps)
-    sim    = fitted.simulate(nsimulations=steps, repetitions=500, error="add")
+    if len(df) < 4:
+        # Fall back to simple mean forecast if too few points
+        mean_val = series.mean()
+        point = np.array([mean_val] * steps)
+        return pd.DataFrame({
+            'point':    point,
+            'lower_80': point * 0.6,
+            'upper_80': point * 1.4,
+            'lower_95': point * 0.4,
+            'upper_95': point * 1.6,
+            'method':   ['mean_fallback'] * steps,
+        })
 
-    point    = pred.values
-    lower_95 = np.percentile(sim, 2.5,  axis=1)
-    upper_95 = np.percentile(sim, 97.5, axis=1)
-    lower_80 = np.percentile(sim, 10,   axis=1)
-    upper_80 = np.percentile(sim, 90,   axis=1)
+    model = Prophet(
+        yearly_seasonality=True,
+        weekly_seasonality=False,
+        daily_seasonality=False,
+        seasonality_mode='multiplicative',
+        interval_width=0.80,
+    )
+    model.fit(df)
+
+    # Create future dataframe
+    last_date = df['ds'].max()
+    future_dates = pd.date_range(start=last_date + pd.DateOffset(months=1), periods=steps, freq='MS')
+    future = pd.DataFrame({'ds': future_dates})
+    forecast = model.predict(future)
+
+    point    = forecast['yhat'].values.clip(min=0)
+    lower_80 = forecast['yhat_lower'].values.clip(min=0)
+    upper_80 = forecast['yhat_upper'].values.clip(min=0)
 
     return pd.DataFrame({
-        "point":    point,
-        "lower_80": lower_80,
-        "upper_80": upper_80,
-        "lower_95": lower_95,
-        "upper_95": upper_95,
-        "method":   ["Holt-Winters seasonal"] * steps,
+        'point':    point,
+        'lower_80': lower_80,
+        'upper_80': upper_80,
+        'lower_95': lower_80 * 0.8,
+        'upper_95': upper_80 * 1.2,
+        'method':   ['Prophet'] * steps,
     })
 
 
