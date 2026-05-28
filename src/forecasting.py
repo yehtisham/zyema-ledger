@@ -24,7 +24,7 @@ Outputs
 
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.holtwinters import Holt
+from statsmodels.tsa.holtwinters import Holt, ExponentialSmoothing
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -78,31 +78,29 @@ def load_monthly(path: str = "data/cleaned_cashbook.csv") -> pd.DataFrame:
 # ── Forecasting engine ────────────────────────────────────────────────
 
 def _holt_forecast(series: pd.Series, steps: int = 6) -> pd.DataFrame:
-    """
-    Fit Holt's Linear Trend model and return point forecast +
-    80 % / 95 % confidence intervals for `steps` periods ahead.
-
-    Falls back to a flat mean if the series has fewer than 4
-    non-zero observations.
-    """
     clean = series.replace(0, np.nan).dropna()
 
-    if len(clean) < 4:
-        # Not enough data — use mean as flat forecast
-        mean = series.mean()
-        std  = series.std(ddof=1) if len(series) > 1 else mean * 0.3
-        idx  = range(1, steps + 1)
-        return pd.DataFrame({
-            "point":    [mean] * steps,
-            "lower_80": [mean - 1.28 * std] * steps,
-            "upper_80": [mean + 1.28 * std] * steps,
-            "lower_95": [mean - 1.96 * std] * steps,
-            "upper_95": [mean + 1.96 * std] * steps,
-            "method":   ["flat mean"] * steps,
-        })
+    if len(clean) < 12:
+        # Not enough data — fall back to Holt Linear Trend
+        model  = Holt(clean, damped_trend=True, initialization_method="estimated")
+        fitted = model.fit(optimized=True)
+    else:
+        # Use Holt-Winters with additive seasonality (12-month cycle)
+        try:
+            model  = ExponentialSmoothing(
+                clean,
+                trend="add",
+                seasonal="add",
+                seasonal_periods=12,
+                initialization_method="estimated",
+                damped_trend=True,
+            )
+            fitted = model.fit(optimized=True)
+        except Exception:
+            # Fall back to Holt if seasonal model fails
+            model  = Holt(clean, damped_trend=True, initialization_method="estimated")
+            fitted = model.fit(optimized=True)
 
-    model  = Holt(clean, damped_trend=True, initialization_method="estimated")
-    fitted = model.fit(optimized=True)
     pred   = fitted.forecast(steps)
     sim    = fitted.simulate(nsimulations=steps, repetitions=500, error="add")
 
@@ -118,7 +116,7 @@ def _holt_forecast(series: pd.Series, steps: int = 6) -> pd.DataFrame:
         "upper_80": upper_80,
         "lower_95": lower_95,
         "upper_95": upper_95,
-        "method":   ["Holt linear trend"] * steps,
+        "method":   ["Holt-Winters seasonal"] * steps,
     })
 
 
