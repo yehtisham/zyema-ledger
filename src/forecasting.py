@@ -93,20 +93,11 @@ def load_monthly(path: str = "data/cleaned_cashbook.csv") -> pd.DataFrame:
 # ── Forecasting engine ────────────────────────────────────────────────
 
 def _holt_forecast(series: pd.Series, steps: int = 6) -> pd.DataFrame:
-    from prophet import Prophet
-    import logging
-    logging.getLogger('prophet').setLevel(logging.WARNING)
-    logging.getLogger('cmdstanpy').setLevel(logging.WARNING)
+    from sklearn.linear_model import LinearRegression
 
-    # Prepare dataframe for Prophet
-    df = pd.DataFrame({
-        'ds': series.index if hasattr(series.index, 'freq') else pd.date_range(start='2024-05-01', periods=len(series), freq='MS'),
-        'y': series.values
-    })
-    df = df[df['y'] > 0]  # Remove zero months for better fitting
+    n = len(series)
 
-    if len(df) < 4:
-        # Fall back to simple mean forecast if too few points
+    if n < 4:
         mean_val = series.mean()
         point = np.array([mean_val] * steps)
         return pd.DataFrame({
@@ -118,32 +109,40 @@ def _holt_forecast(series: pd.Series, steps: int = 6) -> pd.DataFrame:
             'method':   ['mean_fallback'] * steps,
         })
 
-    model = Prophet(
-        yearly_seasonality=True,
-        weekly_seasonality=False,
-        daily_seasonality=False,
-        seasonality_mode='multiplicative',
-        interval_width=0.80,
-    )
-    model.fit(df)
+    # Resolve datetime index
+    if pd.api.types.is_datetime64_any_dtype(series.index):
+        dates = pd.DatetimeIndex(series.index)
+    else:
+        dates = pd.date_range(start='2024-05-01', periods=n, freq='MS')
 
-    # Create future dataframe
-    last_date = df['ds'].max()
-    future_dates = pd.date_range(start=last_date + pd.DateOffset(months=1), periods=steps, freq='MS')
-    future = pd.DataFrame({'ds': future_dates})
-    forecast = model.predict(future)
+    # Build features: linear trend + month-of-year dummies
+    base = pd.DataFrame({'t': range(n), 'mon': dates.month})
+    dummies = pd.get_dummies(base['mon'], prefix='m', drop_first=True)
+    X = pd.concat([base[['t']], dummies], axis=1).astype(float).values
+    y = series.values.astype(float)
 
-    point    = forecast['yhat'].values.clip(min=0)
-    lower_80 = forecast['yhat_lower'].values.clip(min=0)
-    upper_80 = forecast['yhat_upper'].values.clip(min=0)
+    model = LinearRegression()
+    model.fit(X, y)
+
+    # Prediction intervals from residual std (80% ≈ ±1.28σ, 95% ≈ ±1.96σ)
+    s = (y - model.predict(X)).std()
+
+    # Future features
+    future_dates = pd.date_range(start=dates[-1] + pd.DateOffset(months=1), periods=steps, freq='MS')
+    future_base  = pd.DataFrame({'t': range(n, n + steps), 'mon': future_dates.month})
+    future_dummies = pd.get_dummies(future_base['mon'], prefix='m', drop_first=True)
+    future_dummies = future_dummies.reindex(columns=dummies.columns, fill_value=0)
+    X_future = pd.concat([future_base[['t']], future_dummies], axis=1).astype(float).values
+
+    point = model.predict(X_future).clip(min=0)
 
     return pd.DataFrame({
         'point':    point,
-        'lower_80': lower_80,
-        'upper_80': upper_80,
-        'lower_95': lower_80 * 0.8,
-        'upper_95': upper_80 * 1.2,
-        'method':   ['Prophet'] * steps,
+        'lower_80': (point - 1.28 * s).clip(min=0),
+        'upper_80': (point + 1.28 * s).clip(min=0),
+        'lower_95': (point - 1.96 * s).clip(min=0),
+        'upper_95': (point + 1.96 * s).clip(min=0),
+        'method':   ['OLS_seasonal'] * steps,
     })
 
 
