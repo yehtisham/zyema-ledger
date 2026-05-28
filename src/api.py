@@ -157,7 +157,7 @@ def forecast(
     db:      Session = Depends(get_db),
 ):
     df = _db_to_df(db)
-    df = df[df["source"] == "xlsm"]  # Use only original xlsm data for unbiased forecasting
+    df = df[df["source"] != "manual"]  # Exclude manually added transactions for unbiased forecasting
     df.to_csv(FULL_CSV, index=False)
     fc = generate_forecast(data_path=FULL_CSV, horizon=horizon, output_path=FORECAST_CSV)
     return fc.to_dict(orient="records")
