@@ -87,6 +87,26 @@ def _load_model():
         raise HTTPException(status_code=503, detail="ML model not found. Run train_category.py first.")
     return joblib.load(MODEL_PATH)
 
+# ── Counterparty aliases ──────────────────────────────────────────────
+COUNTERPARTY_ALIASES = {
+    'waseem resin':              'Waseem',
+    'naveed resin (waseem)':     'Waseem',
+    'waseem':                    'Waseem',
+    'polymer international':     'Polymer International',
+    'scada':                     'Scada',
+    'sika pakistan':             'Sika Pakistan',
+    'anjum chemical- pak petro': 'Anjum Chemical- Pak Petro',
+    'anjum chemical pak petro':  'Anjum Chemical- Pak Petro',
+    'htg chor':                  'HTG Chor',
+    'khalid plastic':            'Khalid Plastic',
+    'tanveer drum':              'Tanveer Drum',
+}
+
+def normalize_counterparty(name: str | None) -> str | None:
+    if not name:
+        return name
+    return COUNTERPARTY_ALIASES.get(name.lower().strip(), name.strip().title())
+
 # ── Pydantic schemas ──────────────────────────────────────────────────
 class NewTransaction(BaseModel):
     date:         str
@@ -202,6 +222,7 @@ def backtest():
 @app.get("/accounts-receivable", tags=["Statements"])
 def accounts_receivable(db: Session = Depends(get_db)):
     df       = _db_to_df(db)
+    df["counterparty"] = df["counterparty"].apply(normalize_counterparty)
     sold     = df[df["category"].str.startswith("Sales", na=False)] \
                  .groupby("counterparty")["credit"].sum()
     received = df[df["category"] == "Customer Payment Received"] \
