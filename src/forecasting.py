@@ -93,12 +93,14 @@ def load_monthly(path: str = "data/cleaned_cashbook.csv") -> pd.DataFrame:
 # ── Forecasting engine ────────────────────────────────────────────────
 
 def _holt_forecast(series: pd.Series, steps: int = 6) -> pd.DataFrame:
-    from sklearn.linear_model import LinearRegression
-
+    """
+    Seasonal Naive (Same Month Last Year) forecast with 80%/95% confidence
+    intervals derived from the historical spread of same-month values.
+    """
     n = len(series)
 
-    if n < 4:
-        mean_val = series.mean()
+    if n < 2:
+        mean_val = float(series.mean()) if n > 0 else 0.0
         point = np.array([mean_val] * steps)
         return pd.DataFrame({
             'point':    point,
@@ -115,34 +117,42 @@ def _holt_forecast(series: pd.Series, steps: int = 6) -> pd.DataFrame:
     else:
         dates = pd.date_range(start='2024-05-01', periods=n, freq='MS')
 
-    # Build features: linear trend + month-of-year dummies
-    base = pd.DataFrame({'t': range(n), 'mon': dates.month})
-    dummies = pd.get_dummies(base['mon'], prefix='m', drop_first=True)
-    X = pd.concat([base[['t']], dummies], axis=1).astype(float).values
-    y = series.values.astype(float)
+    s = pd.Series(series.values.astype(float), index=dates)
+    global_std = float(s.std())
 
-    model = LinearRegression()
-    model.fit(X, y)
+    future_dates = pd.date_range(
+        start=dates[-1] + pd.DateOffset(months=1),
+        periods=steps,
+        freq='MS',
+    )
 
-    # Prediction intervals from residual std (80% ≈ ±1.28σ, 95% ≈ ±1.96σ)
-    s = (y - model.predict(X)).std()
+    points, lower_80s, upper_80s, lower_95s, upper_95s = [], [], [], [], []
 
-    # Future features
-    future_dates = pd.date_range(start=dates[-1] + pd.DateOffset(months=1), periods=steps, freq='MS')
-    future_base  = pd.DataFrame({'t': range(n, n + steps), 'mon': future_dates.month})
-    future_dummies = pd.get_dummies(future_base['mon'], prefix='m', drop_first=True)
-    future_dummies = future_dummies.reindex(columns=dummies.columns, fill_value=0)
-    X_future = pd.concat([future_base[['t']], future_dummies], axis=1).astype(float).values
+    for fd in future_dates:
+        # Point: same month last year; fall back to series mean if unavailable
+        lag12 = fd - pd.DateOffset(years=1)
+        point = float(s[lag12]) if lag12 in s.index else float(s.mean())
 
-    point = model.predict(X_future).clip(min=0)
+        # CI from spread of all historical same-calendar-month values
+        same_month = s[s.index.month == fd.month].values
+        if len(same_month) >= 2:
+            std = float(np.std(same_month, ddof=1))
+        else:
+            std = global_std * 0.5
+
+        points.append(point)
+        lower_80s.append(max(0.0, point - 1.28 * std))
+        upper_80s.append(point + 1.28 * std)
+        lower_95s.append(max(0.0, point - 1.96 * std))
+        upper_95s.append(point + 1.96 * std)
 
     return pd.DataFrame({
-        'point':    point,
-        'lower_80': (point - 1.28 * s).clip(min=0),
-        'upper_80': (point + 1.28 * s).clip(min=0),
-        'lower_95': (point - 1.96 * s).clip(min=0),
-        'upper_95': (point + 1.96 * s).clip(min=0),
-        'method':   ['OLS_seasonal'] * steps,
+        'point':    np.array(points).clip(min=0),
+        'lower_80': np.array(lower_80s),
+        'upper_80': np.array(upper_80s),
+        'lower_95': np.array(lower_95s),
+        'upper_95': np.array(upper_95s),
+        'method':   ['seasonal_naive'] * steps,
     })
 
 
