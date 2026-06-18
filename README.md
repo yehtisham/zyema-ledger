@@ -70,3 +70,36 @@ Small trading businesses typically rely on manual Excel bookkeeping with no fore
 ---
 
 ## Architecture
+Excel/CSV → ETL (migrate.py) → SQLite (Render persistent disk)
+
+↓
+
+FastAPI REST API
+
+↓
+
+React Frontend (Netlify)
+
+↓
+
+ML models served via API endpoints:
+
+/predict-category
+
+/forecast
+
+/backtest
+
+/income-statement
+
+/balance-sheet
+
+/accounts-receivable
+
+/ar-aging
+
+---
+
+## Data
+
+Built on operational data from a private trading business. Dataset contains 400+ transactions across 25 months. All sensitive business information has been anonymized.
