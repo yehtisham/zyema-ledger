@@ -20,3 +20,6 @@ real_ledger/
 
 # OS
 .DS_Store
+
+*.xlsm
+*.csv
